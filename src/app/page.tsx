@@ -31,8 +31,8 @@ const cases = [
     tag: "Taiwan",
     title: "대만 — 재의례화의 실험",
     sub: "台灣 Bunun",
-    body: "UNESCO에 등재되지 않은 사례. 부눈족 의례가 관광과 정책 속에서 어떻게 재의례화를 통해 생존하는가.",
-    keywords: ["부눈족", "재의례화", "UNESCO 밖"],
+    body: "UNESCO 미가입국. 부눈족 의례가 식민화·강제이주·관광 정책 속에서 '재의례화'를 통해 생존한다. UNESCO가 못 담는 사례를 우리가 담는다.",
+    keywords: ["부눈족", "재의례화", "UNESCO 밖", "원주민 주체성"],
     href: "/cases/taiwan",
   },
 ];
@@ -114,10 +114,11 @@ export default function Home() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <div className="bg-white rounded-2xl p-7 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-earth/8 hover:-translate-y-0.5 transition-transform">
-              <h3 className="text-earth font-medium mb-3">왜 &lsquo;섬&rsquo;인가</h3>
+              <h3 className="text-earth font-medium mb-3">경험의 멸종</h3>
               <p className="text-[0.95rem] leading-relaxed font-light">
-                제주, 오키나와, 대만. 본토와 분리된 지형이 만들어낸 독자적 전통
-                보존 환경. 각기 다른 압력 속에서 각기 다른 방식으로 살아남았습니다.
+                제도가 보존을 위해 들어왔지만, 오히려 살아있던 생존 방식 — 몸의
+                감각, 호혜, 세대 간 전수 — 을 잠식했을 수 있다. 이 역설을
+                추적합니다.
               </p>
             </div>
           </FadeIn>
