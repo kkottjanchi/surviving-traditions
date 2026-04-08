@@ -6,8 +6,11 @@ export default function Footer() {
       <p className="font-serif text-xl text-white/70 mb-2">
         Surviving Traditions
       </p>
-      <p className="text-sm mb-6">
-        생존전통 — 감각의 고고학
+      <p className="text-sm mb-1">
+        감각의 고고학 : 생존 전통
+      </p>
+      <p className="text-xs text-white/30 mb-6">
+        Archaeology of Senses: Surviving Traditions
       </p>
       <nav className="flex flex-wrap justify-center gap-4 text-xs text-white/30 mb-8">
         <Link href="/about" className="hover:text-white/60 transition-colors">About</Link>

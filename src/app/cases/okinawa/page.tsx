@@ -63,15 +63,43 @@ export default function OkinawaPage() {
               <div className="space-y-3 text-sm text-text/70 font-light">
                 <p>
                   <span className="text-earth font-medium">1429-1879</span> —
-                  류큐 왕국 독립 시기. 쿠미오도리는 중국 사신 접대용 궁중 무용극
+                  류큐 왕국 450년 독립. 나하를 수도로 한·중·일 3국과 무역, &ldquo;만국의 가교&rdquo;로 번성. 쿠미오도리는 중국 사신 접대용 궁중 무용극
                 </p>
                 <p>
-                  <span className="text-earth font-medium">1879</span> — 일본
-                  제국에 강제 병합 (류큐 처분). 왕국 해체
+                  <span className="text-earth font-medium">1879</span> — 메이지 정부의 &ldquo;류큐 처분&rdquo;. 군대를 보내 왕을 폐위, 오키나와현으로 강제 병합. 류큐어 사용 금지, 일본식 교육 강제
                 </p>
                 <p>
-                  <span className="text-earth font-medium">2010</span> — UNESCO
-                  무형문화유산 대표목록 등재
+                  <span className="text-earth font-medium">1945</span> — 오키나와 전투. 태평양전쟁 유일의 본토 지상전. 주민 10만 명 이상 사망. 집단 자결 강요
+                </p>
+                <p>
+                  <span className="text-earth font-medium">1972</span> — 미군정 27년 후 일본 반환. 현재도 본토 면적 0.6%에 주일미군 기지 70%
+                </p>
+                <p>
+                  <span className="text-earth font-medium">2009</span> — UNESCO, 류큐어를 &ldquo;소멸 위기 언어&rdquo;로 지정. 60대 이상만 유창하게 구사
+                </p>
+                <p>
+                  <span className="text-earth font-medium">2010</span> — 쿠미오도리(組踊) UNESCO 무형문화유산 대표목록 등재
+                </p>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* 예술의 생존 */}
+          <FadeIn delay={0.25}>
+            <div className="bg-white rounded-2xl p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-earth/8 mb-8">
+              <h2 className="text-earth font-medium mb-4">예술의 생존</h2>
+              <div className="space-y-4 text-[0.95rem] leading-relaxed font-light text-text/85">
+                <p>
+                  <strong className="font-medium text-deep">에이사(エイサー)</strong> — 오본 축제 때 추는 류큐 전통춤. 일본 정부가 금지하려 했지만 마을 사람들이 은밀하게 이어왔다. 지금은 오키나와 정체성의 상징.
+                </p>
+                <p>
+                  <strong className="font-medium text-deep">삼선(三線)</strong> — 뱀가죽으로 만든 3현 악기. 일제 시기 탄압받았지만 노인들이 집에서 연주했다. 지금은 오키나와 모든 학교에서 가르친다.
+                </p>
+                <p>
+                  <strong className="font-medium text-deep">쿠미오도리(組踊)</strong> — 18세기 류큐 왕조의 궁중 무용극. 왕조 해체 후에도 예인들이 이어왔고 2010년 UNESCO 등재.
+                </p>
+                <p className="text-text/60">
+                  하지만 관광 산업화가 진행되고 있다. 에이사는 호텔 쇼가 되고, 삼선은 기념품 가게에서 팔린다. 류큐어가 사라지면, 류큐 예능의 &lsquo;감각&rsquo;은 어떻게 되는가.
                 </p>
               </div>
             </div>

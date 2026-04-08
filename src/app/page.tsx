@@ -72,8 +72,8 @@ const cases = [
 const team = [
   { initial: "S", name: "최샘이", role: "기획 / 연구" },
   { initial: "Y", name: "박용화", role: "전통예술 / 풍물" },
-  { initial: "K", name: "조계영", role: "공연 기술 / 연출" },
-  { initial: "W", name: "정윤희", role: "연구" },
+  { initial: "K", name: "조계영", role: "배우" },
+  { initial: "W", name: "정윤희", role: "사진 · 기록 · 비평" },
   { initial: "M", name: "김민솔", role: "베리어프리 / 장애학" },
 ];
 
@@ -184,7 +184,7 @@ export default function Home() {
                 <T
                   k={{
                     ko: "경험의 멸종",
-                    en: "Experience Extinction",
+                    en: "Extinction of Experience",
                     ja: "経験の絶滅",
                     zh: "經驗的滅絕",
                   }}

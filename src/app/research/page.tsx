@@ -10,22 +10,16 @@ export const metadata = {
 
 const theories = [
   {
-    author: "Elinor Ostrom",
-    work: "Governing the Commons (1990)",
-    point: "공유재를 자치적으로 관리하는 공동체는 국가·시장 없이도 자생 규칙을 만든다",
-    connection: "남사당 공동체 = Ostrom 공유재 자치 원리의 문화적 사례",
+    author: "Helena Norberg-Hodge",
+    work: "Ancient Futures: Learning from Ladakh (1991)",
+    point: "전통은 과거가 아니라, 우리가 잃어버린 미래의 가능성이다. 라다크가 가지고 있던 공동체, 자급, 지속가능성은 '아직 오지 않은 미래'였다.",
+    connection: "전통예술은 오래된 미래다 — 이 프로젝트의 출발점",
   },
   {
-    author: "Anna Tsing",
-    work: "The Mushroom at the End of the World (2015)",
-    point: "단일 사례(마쓰타케 버섯)로 전 지구적 자본주의·생태·공동체 이론 전체를 이론화",
-    connection: "단일 사례의 무한한 이론적 확장 가능성 — 방법론적 선례",
-  },
-  {
-    author: "Marcel Mauss & Karl Polanyi",
-    work: "The Gift (1925) / The Great Transformation (1944)",
-    point: "호혜·재분배 = 시장 이전의 내재된 경제 (두레·계의 이론적 기반)",
-    connection: "전통예술 공동체의 호혜경제 직관을 학술 언어로 정당화",
+    author: "Christine Rosen",
+    work: "The Extinction of Experience (2008)",
+    point: "직접 경험이 사라지면 존재 방식 자체를 잃는다. 몸으로 받고, 감각으로 느끼고, 타인과 부딪히는 것이 인간으로 존재하는 방식이다.",
+    connection: "전통예술의 소멸 = 박제. 살아있는 것에서 보존해야 할 것으로 바뀌는 과정",
   },
   {
     author: "Laurajane Smith",
@@ -34,10 +28,16 @@ const theories = [
     connection: "제도 역설: 보호하려다 공동체 자생력을 지운 메커니즘",
   },
   {
-    author: "Helena Norberg-Hodge",
-    work: "Ancient Futures (1991)",
-    point: "라다크가 근대화 이후 '행복'이라는 단어를 다시 꺼냄 = 있던 것이 사라졌다는 신호",
-    connection: "연구 전체의 윤리적 긴박성 — '왜 지금 이 연구가 필요한가'",
+    author: "UNESCO",
+    work: "Convention for the Safeguarding of the Intangible Cultural Heritage (2003)",
+    point: "무형문화유산 보호 협약 — 'heritage'가 아닌 'living heritage'로의 전환. 그러나 등재 과정 자체가 전통을 고정시키는 역설.",
+    connection: "영등굿(2009), 해녀(2016), 쿠미오도리(2010) 등재 — 등재 전후 비교의 기준점",
+  },
+  {
+    author: "Victor Turner",
+    work: "The Ritual Process: Structure and Anti-Structure (1969)",
+    point: "의례는 공동체를 일상에서 분리시켜 다시 결합하는 과정이다. 리미널리티(liminal)의 경험이 공동체를 유지한다.",
+    connection: "영등굿·부눈족 의례가 공동체를 '되살리는' 메커니즘 분석의 틀",
   },
 ];
 
@@ -88,16 +88,34 @@ export default function ResearchPage() {
           <FadeIn delay={0.2}>
             <div className="bg-warm/40 rounded-2xl p-8 mb-12">
               <h2 className="font-serif text-xl text-deep mb-4">
-                Experience Extinction
+                Extinction of Experience
               </h2>
               <p className="text-sm text-earth mb-4">경험의 멸종</p>
               <p className="text-[0.95rem] leading-relaxed font-light text-text/85">
                 제도가 들어오면서 공동체가 축적해온 몸의 감각·상호부조
-                규칙·위험 대응 습관이 지워지는 현상. Christine Rosen(2008)의
-                개념을 문화유산 맥락으로 확장한다. 디지털 환경에서의 경험 소실이
-                아니라, 제도화 과정에서의 체화된 지식(embodied knowledge)의
-                소실에 주목한다.
+                규칙·위험 대응 습관이 지워지는 현상. 직접 경험이 사라지면, 단순히 불편함을 잃는 게 아니라 존재 방식 자체를 잃는다. 전통예술의 소멸은 과거가 사라지는 게 아니라, 우리 모두가 소멸할 방식의 예고편이다.
               </p>
+            </div>
+          </FadeIn>
+
+          {/* 감각의 고고학 */}
+          <FadeIn delay={0.25}>
+            <div className="bg-white rounded-2xl p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-earth/8 mb-12">
+              <h2 className="font-serif text-xl text-deep mb-4">
+                감각의 고고학
+              </h2>
+              <p className="text-sm text-earth mb-4">Archaeology of the Senses — 방법론</p>
+              <div className="space-y-3 text-[0.95rem] leading-relaxed font-light text-text/85">
+                <p>
+                  소멸의 불안 속에서 DNA에 새겨진 감각을 되찾는 기억의 발굴. 전통예술의 지층에는 원류의 정체성만이 아니라, 시대마다 겪은 비극과 저항, 적응과 변형이 층층이 쌓여 있다.
+                </p>
+                <p>
+                  고고학자는 유물을 꺼내서 박물관에 넣는다. 하지만 우리는 그 지층 속으로 들어가려 한다. 감각으로. 몸으로. 질문으로.
+                </p>
+                <p className="text-sm text-text/60">
+                  직접 만남, 실연 참여, 역사적 맥락 분석, 관광화/보존의 이중성 포착, 소수 언어(류큐어·제주어) 기록.
+                </p>
+              </div>
             </div>
           </FadeIn>
 

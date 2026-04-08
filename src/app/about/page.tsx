@@ -38,23 +38,23 @@ export default function AboutPage() {
             <div className="space-y-6 text-[0.95rem] leading-relaxed font-light text-text/85">
               <p>
                 <strong className="font-medium text-deep">
-                  Surviving Traditions(생존전통)
-                </strong>
-                는 전통 공연예술이 어떻게 살아남았는가를 묻는 비교 연구
+                  감각의 고고학 : 생존 전통
+                </strong>{" "}
+                (Archaeology of Senses: Surviving Traditions)은 전통 공연예술이 어떻게 살아남았는가를 묻는 비교 연구
                 프로젝트입니다. 2026년 한국문화예술위원회 국제협력네트워크 사업의
-                지원을 받아 제주, 오키나와, 대만 세 지역의 전통을 비교합니다.
+                지원을 받아 제주, 오키나와(류큐), 대만 세 지역의 전통을 비교합니다.
+              </p>
+              <p>
+                <strong className="font-medium text-deep">4COP</strong>는 유랑의 감각을 연구하는 프로젝트 그룹입니다. 남사당놀이라는 유랑 예술을 출발점으로, 떠도는 것들의 생존 전략, 이동 속의 정체성, 정주하지 않는 예술의 미래를 탐구합니다. 유랑은 도망이 아니라 주체적 선택이었습니다. 불안한 세계에서 안전을 찾기 위해 움직인 것입니다.
+              </p>
+              <p>
+                류큐는 450년 독립 왕국에서 일본 병합과 오키나와 전투를 거쳤고, 대만 원주민은 16개 부족이 평지에서 산으로 밀려났으며, 제주는 4·3 사건으로 육지로 흩어졌습니다. 이들의 전통예술은 쫓겨나면서도 살아남았습니다. 우리는 &lsquo;감각의 고고학&rsquo;이라는 질적 연구 방법으로 관광화와 보존 사이, 소멸과 변신 사이의 이중성을 발굴합니다.
               </p>
               <p>
                 우리는 &lsquo;보존&rsquo;이 아니라 &lsquo;생존&rsquo;에
                 주목합니다. 전통은 박제된 유산이 아닙니다. 살아남기 위해
                 변화하고, 때로는 좁아지고, 때로는 확장하며 버텨온 것입니다.
                 그 버팀의 방식 자체가 연구의 대상입니다.
-              </p>
-              <p>
-                이 연구는 2026년 7월 리스본 ISTR(International Society for
-                Third-Sector Research) 컨퍼런스에서 포스터 발표될 예정이며,
-                &lsquo;경험의 멸종(Experience Extinction)&rsquo; 개념을 통해
-                제도화가 공동체에 미친 역설적 영향을 이론화합니다.
               </p>
             </div>
           </FadeIn>

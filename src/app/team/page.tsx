@@ -25,16 +25,16 @@ const fieldTeam = [
   {
     initial: "K",
     name: "조계영",
-    role: "공연 기술 / 연출",
-    affiliation: "배우 / 연출가",
+    role: "배우",
+    affiliation: "4COP",
     description: "\"비주류를 제거해야 정체성이 생긴다\" — 축소론의 관점. 남사당이 여섯 가지로 지정된 순간 비주류가 제거됐고 오히려 정체성이 강화됐다고 본다.",
   },
   {
     initial: "W",
     name: "정윤희",
-    role: "연구",
-    affiliation: "",
-    description: "연구 지원 및 현장 기록.",
+    role: "사진 · 기록 · 비평",
+    affiliation: "비평그룹 시각 편집장 / 블랙리스트 이후 디렉터",
+    description: "마을교육공동체 현장연구(교육부·인천시, 2021) 책임연구자. 돌봄의 정치 '오이코스폴리틱스' 주제전시 기획(2023). 사진과 비평적 시각으로 현장을 기록한다.",
   },
   {
     initial: "M",
