@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --warm: #F5E6D3;
+  --earth: #8B7355;
+  --deep: #2C2416;
+  --accent: #C4956A;
+  --sage: #7A8B6F;
+  --sky: #A8B8C8;
+  --cream: #FDF8F0;
+  --text: #3A3028;
+  --font-size-base: 17px;
+}
+
+@theme inline {
+  --color-warm: var(--warm);
+  --color-earth: var(--earth);
+  --color-deep: var(--deep);
+  --color-accent: var(--accent);
+  --color-sage: var(--sage);
+  --color-sky: var(--sky);
+  --color-cream: var(--cream);
+  --color-text: var(--text);
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans TC', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: var(--font-size-base);
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 글씨 크기 조절 */
+html.font-size-sm { font-size: 15px; }
+html.font-size-md { font-size: 17px; }
+html.font-size-lg { font-size: 19px; }
+html.font-size-xl { font-size: 21px; }
