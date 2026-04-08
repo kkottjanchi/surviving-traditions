@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { LangProvider } from "@/lib/i18n";
 
 const GA_ID = "G-Z3ZGMM7S4H";
 
 export const metadata: Metadata = {
   title: "Surviving Traditions | 생존전통",
   description:
-    "전통은 어떻게 살아남는가. 제주, 오키나와, 대만 — 세 개의 섬, 세 가지 생존 방식.",
+    "전통은 어떻게 살아남는가 — How do traditions survive?",
   openGraph: {
     title: "Surviving Traditions | 생존전통",
     description:
@@ -37,7 +38,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        {children}
+        <LangProvider>{children}</LangProvider>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"

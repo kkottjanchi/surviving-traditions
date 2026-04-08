@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
+import UnescoDive from "@/components/UnescoDive";
 import Link from "next/link";
 
 export const metadata = {
@@ -76,19 +77,14 @@ export default function OkinawaPage() {
             </div>
           </FadeIn>
 
+          {/* UNESCO Dive 시각화 */}
           <FadeIn delay={0.3}>
-            <div className="bg-white rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-earth/8 mb-8">
-              <h2 className="text-sm text-earth font-medium mb-4">
-                UNESCO ICH
-              </h2>
-              <a
-                href="https://ich.unesco.org/en/RL/kumiodori-traditional-okinawan-musical-theatre-00405"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-earth hover:text-accent transition-colors"
-              >
-                Kumiodori, traditional Okinawan musical theatre (2010) &rarr;
-              </a>
+            <div className="mb-8">
+              <UnescoDive
+                elementId="00405"
+                title="Kumiodori, traditional Okinawan musical theatre (2010)"
+                url="https://ich.unesco.org/en/RL/kumiodori-traditional-okinawan-musical-theatre-00405"
+              />
             </div>
           </FadeIn>
 

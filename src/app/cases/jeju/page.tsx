@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
+import UnescoDive from "@/components/UnescoDive";
 import Link from "next/link";
 
 export const metadata = {
@@ -80,38 +81,19 @@ export default function JejuPage() {
             </div>
           </FadeIn>
 
-          {/* UNESCO 링크 */}
+          {/* UNESCO Dive 시각화 */}
           <FadeIn delay={0.3}>
-            <div className="bg-white rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-earth/8 mb-8">
-              <h2 className="text-sm text-earth font-medium mb-4">
-                UNESCO ICH 등재 정보
-              </h2>
-              <div className="space-y-2 text-sm">
-                <a
-                  href="https://ich.unesco.org/en/RL/jeju-chilmeoridang-yeongdeunggut-00187"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-earth hover:text-accent transition-colors"
-                >
-                  Jeju Chilmeoridang Yeongdeunggut (2009) &rarr;
-                </a>
-                <a
-                  href="https://ich.unesco.org/en/RL/culture-of-jeju-haenyeo-women-divers-01068"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-earth hover:text-accent transition-colors"
-                >
-                  Culture of Jeju Haenyeo (2016) &rarr;
-                </a>
-                <a
-                  href="https://ich.unesco.org/dive/constellation/?language=en&filter=187&focus=187"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-earth hover:text-accent transition-colors"
-                >
-                  UNESCO Dive 시각화에서 보기 &rarr;
-                </a>
-              </div>
+            <div className="space-y-4 mb-8">
+              <UnescoDive
+                elementId="00187"
+                title="Jeju Chilmeoridang Yeongdeunggut (2009)"
+                url="https://ich.unesco.org/en/RL/jeju-chilmeoridang-yeongdeunggut-00187"
+              />
+              <UnescoDive
+                elementId="01068"
+                title="Culture of Jeju Haenyeo — Women Divers (2016)"
+                url="https://ich.unesco.org/en/RL/culture-of-jeju-haenyeo-women-divers-01068"
+              />
             </div>
           </FadeIn>
 

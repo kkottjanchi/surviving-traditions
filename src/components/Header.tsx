@@ -2,21 +2,22 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import LangSwitch from "./LangSwitch";
 
 const navItems = [
-  { href: "/about", label: "About", ko: "소개" },
-  { href: "/research", label: "Research", ko: "연구" },
-  { href: "/cases", label: "Cases", ko: "사례" },
-  { href: "/fieldwork", label: "Fieldwork", ko: "현장" },
-  { href: "/team", label: "Team", ko: "팀" },
-  { href: "/publications", label: "Publications", ko: "발표" },
-  { href: "/board", label: "Board", ko: "글" },
-  { href: "/join", label: "Join", ko: "참여" },
+  { href: "/about", label: "About" },
+  { href: "/research", label: "Research" },
+  { href: "/cases", label: "Cases" },
+  { href: "/fieldwork", label: "Fieldwork" },
+  { href: "/team", label: "Team" },
+  { href: "/publications", label: "Publications" },
+  { href: "/board", label: "Board" },
+  { href: "/join", label: "Join" },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [fontSize, setFontSize] = useState(1); // 0=sm, 1=md, 2=lg, 3=xl
+  const [fontSize, setFontSize] = useState(1);
 
   const fontClasses = ["font-size-sm", "font-size-md", "font-size-lg", "font-size-xl"];
 
@@ -31,10 +32,13 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-earth/10">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-        {/* 로고 */}
-        <Link href="/" className="font-serif text-lg text-deep tracking-tight">
-          Surviving Traditions
-        </Link>
+        {/* 언어 전환 */}
+        <div className="flex items-center gap-3">
+          <LangSwitch />
+          <Link href="/" className="font-serif text-lg text-deep tracking-tight hidden sm:block">
+            Surviving Traditions
+          </Link>
+        </div>
 
         {/* 데스크톱 내비게이션 */}
         <nav className="hidden md:flex items-center gap-5">
@@ -85,7 +89,6 @@ export default function Header() {
               onClick={() => setMenuOpen(false)}
               className="block py-2 text-sm text-text/70 hover:text-earth"
             >
-              <span className="text-earth/50 mr-2">{item.ko}</span>
               {item.label}
             </Link>
           ))}
