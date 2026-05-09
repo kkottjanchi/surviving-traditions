@@ -195,9 +195,9 @@ export default function ResearchPage() {
               <p className="text-sm text-earth mb-4">
                 {t({
                   ko: "경험의 멸종",
-                  en: "경험의 멸종",
-                  ja: "경험의 멸종",
-                  zh: "경험의 멸종",
+                  en: "Extinction of Experience",
+                  ja: "経験の絶滅",
+                  zh: "經驗的滅絕",
                 })}
               </p>
               <p className="text-[0.95rem] leading-relaxed font-light text-text/85">
@@ -217,9 +217,9 @@ export default function ResearchPage() {
               <h2 className="font-serif text-xl text-deep mb-4">
                 {t({
                   ko: "감각의 고고학",
-                  en: "감각의 고고학",
-                  ja: "감각의 고고학",
-                  zh: "감각의 고고학",
+                  en: "Archaeology of the Senses",
+                  ja: "感覚の考古学",
+                  zh: "感官考古學",
                 })}
               </h2>
               <p className="text-sm text-earth mb-4">

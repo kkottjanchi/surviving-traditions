@@ -139,7 +139,14 @@ export default function AboutPage() {
           <FadeIn>
             <h2 className="font-serif text-xl text-deep mb-6">Supported by</h2>
             <div className="space-y-3 text-sm text-text/60 font-light">
-              <p>2026 한국문화예술위원회 국제협력네트워크 (기획·네트워크, 단년)</p>
+              <p>
+                {t({
+                  ko: "2026 한국문화예술위원회 국제협력네트워크 (기획·네트워크, 단년)",
+                  en: "2026 Arts Council Korea International Cooperation Network (Planning & Network, Single-Year)",
+                  ja: "2026年 韓国文化芸術委員会 国際協力ネットワーク（企画・ネットワーク、単年）",
+                  zh: "2026年 韓國文化藝術委員會 國際合作網絡（企劃・網絡，單年）",
+                })}
+              </p>
               <p>ISTR — International Society for Third-Sector Research</p>
               <p>
                 {t({
