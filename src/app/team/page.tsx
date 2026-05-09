@@ -60,7 +60,7 @@ export default function TeamPage() {
     },
     {
       initial: "Y",
-      name: "박용화",
+      name: "박용화 Yonghwa Park",
       role: t({ ko: "전통예술 / 풍물", en: "Traditional Arts / Pungmul", ja: "伝統芸術・プンムル", zh: "傳統藝術 / 農樂" }),
       affiliation: t({ ko: "풍물 교육 15년", en: "15 years of Pungmul education", ja: "プンムル教育15年", zh: "農樂教育15年" }),
       description: t({
@@ -72,7 +72,7 @@ export default function TeamPage() {
     },
     {
       initial: "K",
-      name: "조계영",
+      name: "조계영 Kyeyoung Jo",
       role: t({ ko: "배우", en: "Actor", ja: "俳優", zh: "演員" }),
       affiliation: "4COP",
       description: t({
@@ -84,7 +84,7 @@ export default function TeamPage() {
     },
     {
       initial: "W",
-      name: "정윤희",
+      name: "정윤희 Yunhee Jeong",
       role: t({ ko: "사진 · 기록 · 비평", en: "Photography · Documentation · Criticism", ja: "写真・記録・批評", zh: "攝影・記錄・批評" }),
       affiliation: t({
         ko: "비평그룹 시각 편집장 / 블랙리스트 이후 디렉터",
@@ -101,7 +101,7 @@ export default function TeamPage() {
     },
     {
       initial: "M",
-      name: "김민솔",
+      name: "김민솔 Minsol Kim",
       role: t({ ko: "베리어프리 / 장애학", en: "Barrier-Free / Disability Studies", ja: "バリアフリー・障害学", zh: "無障礙 / 殘障研究" }),
       affiliation: t({ ko: "대구대학교 박사과정", en: "Daegu University, PhD Program", ja: "大邱大学校博士課程", zh: "大邱大學博士課程" }),
       description: t({
@@ -116,7 +116,7 @@ export default function TeamPage() {
   const istrTeam: Member[] = [
     {
       initial: "O",
-      name: "오민정",
+      name: "오민정 Minjung Oh",
       role: t({ ko: "공동 연구자", en: "Co-Researcher", ja: "共同研究者", zh: "共同研究者" }),
       affiliation: t({
         ko: "한국교원대학교 독일교육학과 교수",
@@ -133,7 +133,7 @@ export default function TeamPage() {
     },
     {
       initial: "C",
-      name: "최문영",
+      name: "최문영 Moonyoung Choi",
       role: t({ ko: "공동 연구자", en: "Co-Researcher", ja: "共同研究者", zh: "共同研究者" }),
       affiliation: t({
         ko: "성균관대학교 하이브리드미래문화연구소",

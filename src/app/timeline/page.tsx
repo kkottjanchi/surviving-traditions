@@ -36,7 +36,7 @@ export default function TimelinePage() {
     {
       date: "2026.03.15",
       title: t({ ko: "생존전통 첫 모임 (OT)", en: "Surviving Traditions First Meeting (Orientation)", ja: "生存する伝統第1回ミーティング（OT）", zh: "生存傳統第一次聚會（說明會）" }),
-      desc: t({ ko: "혜화 / 최샘이, 박용화, 조계영. 확장론 vs 축소론 vs 비교론 토론", en: "Hyehwa / SEMI CHOI, Yonghwa Park, Gyeyoung Jo. Expansion vs. Reduction vs. Comparative theory debate", ja: "恵化 / 최샘이、박용화、조계영。拡張論 vs 縮小論 vs 比較論討論", zh: "惠化 / 최샘이、박용화、조계영。擴張論 vs 縮小論 vs 比較論討論" }),
+      desc: t({ ko: "혜화 / 최샘이, 박용화, 조계영. 확장론 vs 축소론 vs 비교론 토론", en: "Hyehwa / SEMI CHOI, Yonghwa Park, Gyeyoung Jo. Expansion vs. Reduction vs. Comparative theory debate", ja: "恵化 / SEMI CHOI、Yonghwa Park、Gyeyoung Jo。拡張論 vs 縮小論 vs 比較論討論", zh: "惠化 / SEMI CHOI、Yonghwa Park、Gyeyoung Jo。擴張論 vs 縮小論 vs 比較論討論" }),
       done: true,
     },
     {

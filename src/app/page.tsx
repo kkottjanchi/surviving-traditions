@@ -4,7 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
-import { T } from "@/lib/i18n";
+import { T, useT } from "@/lib/i18n";
 
 const locations = [
   { name: "Jeju", sub: "제주", href: "/cases/jeju" },
@@ -69,15 +69,17 @@ const cases = [
   },
 ];
 
-const team = [
-  { initial: "S", name: "최샘이", role: "기획 / 연구" },
-  { initial: "Y", name: "박용화", role: "전통예술 / 풍물" },
-  { initial: "K", name: "조계영", role: "배우" },
-  { initial: "W", name: "정윤희", role: "사진 · 기록 · 비평" },
-  { initial: "M", name: "김민솔", role: "베리어프리 / 장애학" },
-];
-
 export default function Home() {
+  const t = useT();
+
+  const team = [
+    { initial: "S", name: "최샘이 SEMI CHOI", role: t({ ko: "기획 / 연구", en: "Director / Research", ja: "企画・研究", zh: "企劃 / 研究" }) },
+    { initial: "Y", name: "박용화 Yonghwa Park", role: t({ ko: "전통예술 / 풍물", en: "Traditional Arts / Pungmul", ja: "伝統芸術・プンムル", zh: "傳統藝術 / 農樂" }) },
+    { initial: "K", name: "조계영 Kyeyoung Jo", role: t({ ko: "배우", en: "Actor", ja: "俳優", zh: "演員" }) },
+    { initial: "W", name: "정윤희 Yunhee Jeong", role: t({ ko: "사진 · 기록 · 비평", en: "Photography · Documentation · Criticism", ja: "写真・記録・批評", zh: "攝影・記錄・批評" }) },
+    { initial: "M", name: "김민솔 Minsol Kim", role: t({ ko: "베리어프리 / 장애학", en: "Barrier-Free / Disability Studies", ja: "バリアフリー・障害学", zh: "無障礙 / 殘障研究" }) },
+  ];
+
   return (
     <>
       <Header />
