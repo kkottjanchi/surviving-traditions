@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
-import { useT } from "@/lib/i18n";
+import { useT, useLang } from "@/lib/i18n";
 import { supabase, type Post } from "@/lib/supabase";
 
 type AuthState = "idle" | "sending" | "sent" | "logged_in";
@@ -13,8 +13,37 @@ function formatDate(iso: string) {
   return iso.slice(0, 10).replace(/-/g, ".");
 }
 
+async function translateText(text: string, to: string): Promise<string> {
+  try {
+    const res = await fetch(
+      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ko|${to}&de=saemyi@gmail.com`
+    );
+    const data = await res.json();
+    if (data.responseStatus === 200) return data.responseData.translatedText;
+    return text;
+  } catch {
+    return text;
+  }
+}
+
+async function translatePost(title: string, body: string) {
+  const targets: [string, string][] = [["en", "en"], ["ja", "ja"], ["zh-TW", "zh"]];
+  const result: Record<string, { title: string; body: string }> = {};
+  await Promise.all(
+    targets.map(async ([apiLang, storeLang]) => {
+      const [t, b] = await Promise.all([
+        translateText(title, apiLang),
+        translateText(body, apiLang),
+      ]);
+      result[storeLang] = { title: t, body: b };
+    })
+  );
+  return result;
+}
+
 export default function BoardPage() {
   const t = useT();
+  const { locale } = useLang();
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,12 +51,12 @@ export default function BoardPage() {
   const [authState, setAuthState] = useState<AuthState>("idle");
   const [session, setSession] = useState<{ email: string } | null>(null);
 
-  // 글쓰기 폼 상태
   const [showForm, setShowForm] = useState(false);
   const [authorName, setAuthorName] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [translating, setTranslating] = useState(false);
   const [submitDone, setSubmitDone] = useState(false);
 
   useEffect(() => {
@@ -37,7 +66,6 @@ export default function BoardPage() {
         setAuthState("logged_in");
       }
     });
-
     const { data: listener } = supabase.auth.onAuthStateChange((_event, s) => {
       if (s?.user?.email) {
         setSession({ email: s.user.email });
@@ -47,7 +75,6 @@ export default function BoardPage() {
         setAuthState("idle");
       }
     });
-
     return () => listener.subscription.unsubscribe();
   }, []);
 
@@ -74,6 +101,9 @@ export default function BoardPage() {
 
   async function submitPost() {
     if (!title.trim() || !body.trim()) return;
+    setTranslating(true);
+    const translations = await translatePost(title.trim(), body.trim());
+    setTranslating(false);
     setSubmitting(true);
     await supabase.from("posts").insert({
       author_email: session!.email,
@@ -81,6 +111,7 @@ export default function BoardPage() {
       title: title.trim(),
       body: body.trim(),
       lang: "ko",
+      translations,
     });
     setTitle("");
     setBody("");
@@ -90,8 +121,18 @@ export default function BoardPage() {
     setSubmitDone((v) => !v);
   }
 
-  async function logout() {
-    await supabase.auth.signOut();
+  function getTitle(post: Post) {
+    if (locale !== "ko" && post.translations?.[locale]?.title) {
+      return post.translations[locale]!.title;
+    }
+    return post.title;
+  }
+
+  function getBody(post: Post) {
+    if (locale !== "ko" && post.translations?.[locale]?.body) {
+      return post.translations[locale]!.body;
+    }
+    return post.body;
   }
 
   return (
@@ -159,14 +200,26 @@ export default function BoardPage() {
                   <p className="text-xs text-text/30">{session.email}</p>
                   <button
                     onClick={submitPost}
-                    disabled={submitting || !title.trim() || !body.trim()}
+                    disabled={submitting || translating || !title.trim() || !body.trim()}
                     className="text-sm text-white bg-earth rounded-xl px-5 py-2 disabled:opacity-40 hover:bg-earth/80 transition-colors"
                   >
-                    {submitting
+                    {translating
+                      ? t({ ko: "번역 중...", en: "Translating...", ja: "翻訳中...", zh: "翻譯中..." })
+                      : submitting
                       ? t({ ko: "저장 중...", en: "Saving...", ja: "保存中...", zh: "儲存中..." })
                       : t({ ko: "게시", en: "Post", ja: "投稿", zh: "發布" })}
                   </button>
                 </div>
+                {translating && (
+                  <p className="text-xs text-text/40 mt-2 text-right">
+                    {t({
+                      ko: "한국어 글을 영어·일본어·중국어로 번역하고 있습니다",
+                      en: "Translating your post to English, Japanese, and Chinese",
+                      ja: "日本語・英語・中国語に翻訳しています",
+                      zh: "正在將文章翻譯成英文、日文、中文",
+                    })}
+                  </p>
+                )}
               </div>
             </FadeIn>
           )}
@@ -177,10 +230,10 @@ export default function BoardPage() {
               <div className="bg-warm/40 rounded-2xl p-6 mb-10 border border-earth/8">
                 <p className="text-sm text-text/70 font-light mb-3">
                   {t({
-                    ko: "멤버 이메일로 Magic Link를 받아 로그인하면 글을 쓸 수 있습니다.",
-                    en: "Log in with a Magic Link sent to your member email to write posts.",
-                    ja: "メンバーのメールアドレスにMagic Linkを受け取ってログインすると投稿できます。",
-                    zh: "以會員信箱接收Magic Link登入後即可撰寫文章。",
+                    ko: "멤버 이메일로 Magic Link(비밀번호 없이 이메일 링크 클릭으로 로그인)를 받아 글을 쓸 수 있습니다.",
+                    en: "Members can log in via Magic Link — a one-click login sent to your email, no password needed.",
+                    ja: "メンバーはMagic Link（パスワード不要、メールのリンクをクリックするだけ）でログインして投稿できます。",
+                    zh: "會員可透過Magic Link登入——點擊發送到信箱的連結即可，無需密碼。",
                   })}
                 </p>
                 {authState === "sent" ? (
@@ -217,12 +270,15 @@ export default function BoardPage() {
             </FadeIn>
           )}
 
-          {/* 로그인 상태 표시 */}
+          {/* 로그인 상태 */}
           {session && (
             <FadeIn delay={0.05}>
               <div className="flex items-center justify-between text-xs text-text/40 mb-8">
                 <span>{session.email}</span>
-                <button onClick={logout} className="hover:text-text/70 transition-colors">
+                <button
+                  onClick={() => supabase.auth.signOut()}
+                  className="hover:text-text/70 transition-colors"
+                >
                   {t({ ko: "로그아웃", en: "Logout", ja: "ログアウト", zh: "登出" })}
                 </button>
               </div>
@@ -242,7 +298,7 @@ export default function BoardPage() {
             </div>
           ) : posts.length === 0 ? (
             <FadeIn delay={0.15}>
-              <div className="bg-white rounded-2xl p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-earth/8 text-center">
+              <div className="bg-white rounded-2xl p-8 border border-earth/8 text-center">
                 <p className="text-text/40 text-sm font-light">
                   {t({
                     ko: "아직 게시글이 없습니다. 첫 글을 써보세요.",
@@ -261,9 +317,9 @@ export default function BoardPage() {
                     <p className="text-xs text-sage mb-2">
                       {post.author_name} · {formatDate(post.created_at)}
                     </p>
-                    <h3 className="text-sm text-deep font-medium mb-2">{post.title}</h3>
+                    <h3 className="text-sm text-deep font-medium mb-2">{getTitle(post)}</h3>
                     <p className="text-sm text-text/60 font-light leading-relaxed whitespace-pre-line">
-                      {post.body}
+                      {getBody(post)}
                     </p>
                   </div>
                 </FadeIn>
@@ -271,7 +327,7 @@ export default function BoardPage() {
             </div>
           )}
 
-          {/* 미리보기 — 기존 하드코딩 샘플 */}
+          {/* 미리보기 샘플 */}
           <FadeIn delay={0.3}>
             <h2 className="text-sm text-sage uppercase tracking-widest mt-16 mb-6">
               {t({
@@ -284,71 +340,56 @@ export default function BoardPage() {
           </FadeIn>
 
           <div className="space-y-4">
-            <FadeIn delay={0.35}>
-              <div className="bg-white/60 rounded-2xl p-6 border border-earth/6">
-                <p className="text-xs text-sage mb-2">최샘이 · 2026.03.15</p>
-                <h3 className="text-sm text-deep font-medium mb-2">
-                  {t({
-                    ko: "생존 방식은 왜 다른가 — 유랑과 정착의 비교",
-                    en: "Why do survival strategies differ — Comparing itinerant and settled traditions",
-                    ja: "生存方式はなぜ異なるのか — 流浪と定住の比較",
-                    zh: "為何生存方式不同——流浪與定居的比較",
-                  })}
-                </h3>
-                <p className="text-sm text-text/50 font-light">
-                  {t({
-                    ko: "남사당은 전국을 돌아다녔고, 여섯 가지만 남았다. 영등굿은 섬 안에서 공동체가 온전히 품었다...",
-                    en: "Namsadang traveled the country and only six forms survived. Yeongdeunggut was wholly embraced by the community within the island...",
-                    ja: "男寺堂は全国を渡り歩き、六つだけが残った。ヨンドゥングッは島の中でコミュニティが丸ごと抱えた...",
-                    zh: "男寺黨走遍全國，只剩六種形式。靈登祭在島內被社群完整承載……",
-                  })}
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.4}>
-              <div className="bg-white/60 rounded-2xl p-6 border border-earth/6">
-                <p className="text-xs text-sage mb-2">박용화 · 2026.03.15</p>
-                <h3 className="text-sm text-deep font-medium mb-2">
-                  {t({
-                    ko: "형태라도 남아야 한다 — 저변 확대의 의미",
-                    en: "The form must survive — The meaning of expanding the base",
-                    ja: "形だけでも残らなければ — 裾野拡大の意味",
-                    zh: "至少形式要留存——擴大根基的意義",
-                  })}
-                </h3>
-                <p className="text-sm text-text/50 font-light">
-                  {t({
-                    ko: "풍물 교육 15년. 대회에 풍물단이 안 나와. 상모 돌려서 전체 판 가는 건 이제 없어지고 있다...",
-                    en: "15 years of Pungmul education. Pungmul troupes no longer show up at competitions. The full performance with sangnmo spinning — it's disappearing...",
-                    ja: "プンムル教育15年。大会にプンムル団が出なくなった。サンモを回して全体の場を作るのはもう消えつつある...",
-                    zh: "農樂教育15年。比賽裡農樂隊不出現了。轉動象帽完整演出整場的形式正在消失……",
-                  })}
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.45}>
-              <div className="bg-white/60 rounded-2xl p-6 border border-earth/6">
-                <p className="text-xs text-sage mb-2">조계영 · 2026.03.15</p>
-                <h3 className="text-sm text-deep font-medium mb-2">
-                  {t({
-                    ko: "비주류를 제거해야 정체성이 생긴다",
-                    en: "Identity emerges only when the marginal is removed",
-                    ja: "傍流を除去してこそアイデンティティが生まれる",
-                    zh: "去除非主流才能形成認同",
-                  })}
-                </h3>
-                <p className="text-sm text-text/50 font-light">
-                  {t({
-                    ko: "남사당이 여섯 가지로 지정된 순간 비주류가 제거됐고, 오히려 정체성이 강화됐다...",
-                    en: "The moment Namsadang was designated as six forms, the marginal was removed and identity was paradoxically strengthened...",
-                    ja: "男寺堂が六つに指定された瞬間に傍流が除去され、むしろアイデンティティが強化された...",
-                    zh: "男寺黨被指定為六種的那一刻，非主流被排除，認同感反而強化了……",
-                  })}
-                </p>
-              </div>
-            </FadeIn>
+            {[
+              {
+                author: "최샘이",
+                date: "2026.03.15",
+                titleKo: "생존 방식은 왜 다른가 — 유랑과 정착의 비교",
+                titleEn: "Why do survival strategies differ — Comparing itinerant and settled traditions",
+                titleJa: "生存方式はなぜ異なるのか — 流浪と定住の比較",
+                titleZh: "為何生存方式不同——流浪與定居的比較",
+                bodyKo: "남사당은 전국을 돌아다녔고, 여섯 가지만 남았다. 영등굿은 섬 안에서 공동체가 온전히 품었다...",
+                bodyEn: "Namsadang traveled the country and only six forms survived. Yeongdeunggut was wholly embraced by the community within the island...",
+                bodyJa: "男寺堂は全国を渡り歩き、六つだけが残った。ヨンドゥングッは島の中でコミュニティが丸ごと抱えた...",
+                bodyZh: "男寺黨走遍全國，只剩六種形式。靈登祭在島內被社群完整承載……",
+              },
+              {
+                author: "박용화",
+                date: "2026.03.15",
+                titleKo: "형태라도 남아야 한다 — 저변 확대의 의미",
+                titleEn: "The form must survive — The meaning of expanding the base",
+                titleJa: "形だけでも残らなければ — 裾野拡大の意味",
+                titleZh: "至少形式要留存——擴大根基的意義",
+                bodyKo: "풍물 교육 15년. 대회에 풍물단이 안 나와. 상모 돌려서 전체 판 가는 건 이제 없어지고 있다...",
+                bodyEn: "15 years of Pungmul education. Pungmul troupes no longer show up at competitions...",
+                bodyJa: "プンムル教育15年。大会にプンムル団が出なくなった...",
+                bodyZh: "農樂教育15年。比賽裡農樂隊不出現了……",
+              },
+              {
+                author: "조계영",
+                date: "2026.03.15",
+                titleKo: "비주류를 제거해야 정체성이 생긴다",
+                titleEn: "Identity emerges only when the marginal is removed",
+                titleJa: "傍流を除去してこそアイデンティティが生まれる",
+                titleZh: "去除非主流才能形成認同",
+                bodyKo: "남사당이 여섯 가지로 지정된 순간 비주류가 제거됐고, 오히려 정체성이 강화됐다...",
+                bodyEn: "The moment Namsadang was designated as six forms, the marginal was removed and identity was paradoxically strengthened...",
+                bodyJa: "男寺堂が六つに指定された瞬間に傍流が除去され、むしろアイデンティティが強化された...",
+                bodyZh: "男寺黨被指定為六種的那一刻，非主流被排除，認同感反而強化了……",
+              },
+            ].map((item, i) => (
+              <FadeIn key={i} delay={0.35 + i * 0.05}>
+                <div className="bg-white/60 rounded-2xl p-6 border border-earth/6">
+                  <p className="text-xs text-sage mb-2">{item.author} · {item.date}</p>
+                  <h3 className="text-sm text-deep font-medium mb-2">
+                    {locale === "en" ? item.titleEn : locale === "ja" ? item.titleJa : locale === "zh" ? item.titleZh : item.titleKo}
+                  </h3>
+                  <p className="text-sm text-text/50 font-light">
+                    {locale === "en" ? item.bodyEn : locale === "ja" ? item.bodyJa : locale === "zh" ? item.bodyZh : item.bodyKo}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </section>
       </main>

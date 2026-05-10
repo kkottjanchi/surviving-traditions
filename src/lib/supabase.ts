@@ -13,4 +13,17 @@ export type Post = {
   title: string;
   body: string;
   lang: "ko" | "en" | "ja" | "zh";
+  translations?: {
+    en?: { title: string; body: string };
+    ja?: { title: string; body: string };
+    zh?: { title: string; body: string };
+  };
+};
+
+export type Contact = {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  message: string;
 };

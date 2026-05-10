@@ -1,12 +1,32 @@
 "use client";
 
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
 import { useT } from "@/lib/i18n";
+import { supabase } from "@/lib/supabase";
 
 export default function JoinPage() {
   const t = useT();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
+
+  async function submitContact() {
+    if (!name.trim() || !email.trim() || !message.trim()) return;
+    setSubmitting(true);
+    await supabase.from("contacts").insert({
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim(),
+    });
+    setDone(true);
+    setSubmitting(false);
+  }
 
   return (
     <>
@@ -65,10 +85,10 @@ export default function JoinPage() {
                   </span>
                   <p>
                     {t({
-                      ko: "아래 연락처로 자신의 관심 분야와 제안할 사례를 알려주세요.",
-                      en: "Contact us below with your field of interest and the case you'd like to propose.",
-                      ja: "下記連絡先に、ご自身の関心分野と提案したい事例をお知らせください。",
-                      zh: "請透過下方聯絡方式告知您的興趣領域及欲提案的案例。",
+                      ko: "아래 연락 폼으로 관심 분야와 제안할 사례를 알려주세요.",
+                      en: "Use the contact form below to tell us your field of interest and the case you'd like to propose.",
+                      ja: "下記のお問い合わせフォームで、ご自身の関心分野と提案したい事例をお知らせください。",
+                      zh: "請透過下方聯絡表單告知您的興趣領域及欲提案的案例。",
                     })}
                   </p>
                 </div>
@@ -78,10 +98,10 @@ export default function JoinPage() {
                   </span>
                   <p>
                     {t({
-                      ko: "프로젝트 팀과 논의 후, Magic Link(이메일 로그인)를 통해 멤버로 초대됩니다.",
-                      en: "After discussion with the project team, you will be invited as a member via Magic Link (email login).",
-                      ja: "プロジェクトチームとの協議後、Magic Link（メールログイン）でメンバーとして招待されます。",
-                      zh: "與專案團隊討論後，將透過Magic Link（電子郵件登入）受邀成為會員。",
+                      ko: "프로젝트 팀과 논의 후, Magic Link(이메일 링크 클릭으로 로그인, 비밀번호 불필요)를 통해 멤버로 초대됩니다.",
+                      en: "After discussion with the project team, you will be invited as a member via Magic Link (click a link in your email — no password needed).",
+                      ja: "プロジェクトチームとの協議後、Magic Link（メールのリンクをクリックするだけ、パスワード不要）でメンバーとして招待されます。",
+                      zh: "與專案團隊討論後，將透過Magic Link（點擊信箱連結即可，無需密碼）受邀成為會員。",
                     })}
                   </p>
                 </div>
@@ -91,10 +111,10 @@ export default function JoinPage() {
                   </span>
                   <p>
                     {t({
-                      ko: "자신의 페이지에서 현장 기록, 글, 미디어를 올리고 다른 멤버들과 교류합니다.",
-                      en: "On your own page, upload field records, writings, and media, and interact with other members.",
-                      ja: "自分のページで現地記録、文章、メディアをアップロードし、他のメンバーと交流します。",
-                      zh: "在您自己的頁面上傳現場記錄、文章與媒體，並與其他會員交流。",
+                      ko: "Board에서 현장 기록, 글, 질문을 올리고 다른 멤버들과 교류합니다.",
+                      en: "Post field records, writings, and questions on the Board, and interact with other members.",
+                      ja: "Boardで現地記録、文章、質問を投稿し、他のメンバーと交流します。",
+                      zh: "在Board上發布現場記錄、文章與問題，並與其他會員交流。",
                     })}
                   </p>
                 </div>
@@ -144,25 +164,71 @@ export default function JoinPage() {
             </div>
           </FadeIn>
 
+          {/* 연락 폼 */}
           <FadeIn delay={0.4}>
-            <div className="bg-deep rounded-2xl p-8 text-center">
-              <h2 className="font-serif text-xl text-white/80 mb-4">
-                Contact
-              </h2>
+            <div className="bg-deep rounded-2xl p-8">
+              <h2 className="font-serif text-xl text-white/80 mb-2">Contact</h2>
               <p className="text-sm text-white/50 font-light mb-6">
                 {t({
-                  ko: "참여 문의 및 제안은 아래로 연락해주세요.",
-                  en: "For inquiries and proposals, please contact us below.",
-                  ja: "参加に関するお問い合わせや提案は下記までご連絡ください。",
-                  zh: "參與諮詢及提案請聯絡以下信箱。",
+                  ko: "참여 문의 및 제안을 남겨주세요. 팀이 직접 연락드립니다.",
+                  en: "Leave your inquiry or proposal. The team will get back to you directly.",
+                  ja: "参加に関するお問い合わせや提案をお残しください。チームから直接ご連絡いたします。",
+                  zh: "請留下您的諮詢或提案，團隊將直接與您聯繫。",
                 })}
               </p>
-              <a
-                href="mailto:kccf.rpt@gmail.com"
-                className="inline-block px-6 py-3 bg-earth text-white rounded-full text-sm hover:bg-accent transition-colors"
-              >
-                kccf.rpt@gmail.com
-              </a>
+
+              {done ? (
+                <div className="text-center py-4">
+                  <p className="text-white/80 font-medium mb-1">
+                    {t({ ko: "메시지를 받았습니다.", en: "Message received.", ja: "メッセージを受け取りました。", zh: "已收到您的訊息。" })}
+                  </p>
+                  <p className="text-white/50 text-sm font-light">
+                    {t({
+                      ko: "팀이 곧 연락드릴게요.",
+                      en: "The team will be in touch soon.",
+                      ja: "チームからまもなくご連絡いたします。",
+                      zh: "團隊將盡快與您聯繫。",
+                    })}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-white/40 transition-colors"
+                    placeholder={t({ ko: "이름 *", en: "Name *", ja: "お名前 *", zh: "姓名 *" })}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <input
+                    type="email"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-white/40 transition-colors"
+                    placeholder={t({ ko: "이메일 *", en: "Email *", ja: "メール *", zh: "電子郵件 *" })}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <textarea
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-white/40 transition-colors min-h-[120px] resize-none leading-relaxed"
+                    placeholder={t({
+                      ko: "관심 분야, 제안할 사례, 또는 간단한 소개를 남겨주세요 *",
+                      en: "Your field of interest, a case to propose, or a brief introduction *",
+                      ja: "関心分野、提案したい事例、または簡単な自己紹介をお書きください *",
+                      zh: "請留下您的興趣領域、欲提案的案例，或簡單的自我介紹 *",
+                    })}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                  <button
+                    onClick={submitContact}
+                    disabled={submitting || !name.trim() || !email.trim() || !message.trim()}
+                    className="w-full py-3 bg-earth text-white rounded-xl text-sm hover:bg-earth/80 disabled:opacity-40 transition-colors"
+                  >
+                    {submitting
+                      ? t({ ko: "전송 중...", en: "Sending...", ja: "送信中...", zh: "傳送中..." })
+                      : t({ ko: "보내기", en: "Send", ja: "送信", zh: "送出" })}
+                  </button>
+                </div>
+              )}
             </div>
           </FadeIn>
         </section>
